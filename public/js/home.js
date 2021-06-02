@@ -9,7 +9,7 @@ $( "form#pay" ).submit(function( event ) {
         removeForm();
         animateBeer();
         reshowText(mainText);
-        //refreshPage(7000);
+        refreshPage(7000);
     });
 });
 
@@ -137,18 +137,22 @@ function animateBeer()
 
 function updateText(mainText, data)
 {
-    let dataObj = JSON.parse(data);
-    let text = 'Something went wrong - ' + dataObj.message;
-    if (dataObj.status === 'success') {
-        text = dataObj.firstName + ', you are number ' + dataObj.leaderboard + ' in the leaderboard.';
+    try {
+        let dataObj = JSON.parse(data);
+        let text = 'Something went wrong - ' + dataObj.message;
+        if (dataObj.status === 'success') {
+            text = dataObj.firstName + ', you are number ' + dataObj.leaderboard + ' in the leaderboard.';
+        }
+
+        mainText.fadeTo( "slow" , 0, function () {
+            mainText.text(text);
+            mainText.addClass('main-title-post')
+        });
+
+        $('#scan-arrow-person').fadeTo( "slow" , 0);
+    } catch (e) {
+        alert('Something went wrong')
     }
-
-    mainText.fadeTo( "slow" , 0, function () {
-        mainText.text(text);
-        mainText.addClass('main-title-post')
-    });
-
-    $('#scan-arrow-person').fadeTo( "slow" , 0);
 }
 
 function reshowText(mainText)

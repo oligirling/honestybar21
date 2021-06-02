@@ -1,8 +1,5 @@
 version: "2.1"
 
-volumes:
-  mariadb-data-bar:
-
 services:
 
   alpine-nginx-php-container:
@@ -19,8 +16,8 @@ services:
       PHP_POST_MAX_SIZE: 250
       PHP_UPLOAD_MAX_FILESIZE: 250
     # remove the volume when using pi
-    volumes:
-      - .:/var/www/html
+    #volumes:
+    #  - .:/var/www/html
 
   wpe:
     restart: always
@@ -41,10 +38,7 @@ services:
       dockerfile: ./Dockerfile.mariadb
     container_name: honesty-bar-mariadb
     working_dir: /application
-    volumes:
-      - mariadb-data-bar:/config/databases
-    #volumes:
-    #  - ./mariadb-data:/config/databases
+    #command: bash -c "mysql -uroot -proot < start-db.sql"
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=honesty
